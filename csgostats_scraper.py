@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 import re
 
 def scrape_profile(player_profile):
-    driver_path = 'chromedriver.exe'
+    driver_path = '/path/to/chromedriver/'
     driver = webdriver.Chrome(executable_path=driver_path)
     url = player_profile
     driver.get(url)
