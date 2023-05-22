@@ -23,7 +23,7 @@ Selenium WebDriver uses the ChromeDriver to communicate test scripts with Google
 # Results
 ![csgo-stats](https://github.com/ShayneEvans/csgostats_scraper/assets/70344759/af50f90a-4c17-4f94-b23c-abce51a35d9e)
 
-The above is the result of the script, a sorted list (by HLTV rating) of all the players entered into the dictionary. Included in A1 is the timestamp at which the sheet was most recently updated.
+What the google sheet should look like after the script is finished executing. This is a sorted list (by HLTV rating) of all the players entered into the dictionary. Included in A1 is the timestamp at which the sheet was most recently updated. The blurred image part on the left is a hyperlink to the csgostats.gg profile page of each of the players.
 
 # Future Improvements
 - Make it Linux friendly. I attempted to set this script up in an Ubuntu 22.10 environment on my Raspberry Pi 3 but ran into many issues when trying to use selenium and chromdriver/chromium. 
