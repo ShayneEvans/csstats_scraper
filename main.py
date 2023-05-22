@@ -29,7 +29,7 @@ def upload_to_google_sheets(players_df):
               'https://www.googleapis.com/auth/drive']
 
     ###USER SPECIFIC###
-    credentials = Credentials.from_service_account_file('/path/to/json/credentials/'', scopes=scopes)
+    credentials = Credentials.from_service_account_file('/path/to/json/credentials/', scopes=scopes)
 
     gc = gspread.authorize(credentials)
 
