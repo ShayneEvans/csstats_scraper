@@ -7,11 +7,14 @@ from google.oauth2.service_account import Credentials
 import re
 import os
 
-#USER SPECIFIC#
+#USER SPECIFIC
 players_dict = {
-    #Player Name: "csgostats.gg Player URL",
+    "EliGE": "https://csgostats.gg/player/76561198066693739",
+    "nitr0": "https://csgostats.gg/player/76561197995889730",
+    #.....
 }
 
+#Creates hyperlinks for google sheets 1st column
 def create_hyperlinks(players_dict):
     hyperlinks_list = []
     for i in range(0, len(players_dict)):
@@ -19,13 +22,14 @@ def create_hyperlinks(players_dict):
 
     return hyperlinks_list
 
+#Uploads dataframe to google sheets
 def upload_to_google_sheets(players_df):
     current_time = datetime.today()
     scopes = ['https://www.googleapis.com/auth/spreadsheets',
               'https://www.googleapis.com/auth/drive']
 
     ###USER SPECIFIC###
-    credentials = Credentials.from_service_account_file('user json file', scopes=scopes)
+    credentials = Credentials.from_service_account_file('/path/to/json/credentials/'', scopes=scopes)
 
     gc = gspread.authorize(credentials)
 
