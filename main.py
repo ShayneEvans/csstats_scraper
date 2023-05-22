@@ -34,9 +34,9 @@ def upload_to_google_sheets(players_df):
     gc = gspread.authorize(credentials)
 
     # open a google sheet
-    gs = gc.open_by_key(os.environ.get('google_sheets_id'))
+    gs = gc.open_by_key('google_sheets_id')
     # select a work sheet from its name
-    worksheet1 = gs.worksheet('Stats')
+    worksheet1 = gs.worksheet('worksheet_name')
     set_with_dataframe(worksheet=worksheet1, dataframe=players_df, include_index=True, include_column_header = True, resize = True)
     worksheet1.update('A1', str(current_time))
 
