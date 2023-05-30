@@ -26,7 +26,7 @@ Selenium WebDriver uses the ChromeDriver to communicate test scripts with Google
 What the google sheet should look like after the script is finished executing. This is a sorted list (by HLTV rating) of all the players entered into the dictionary. Included in A1 is the timestamp at which the sheet was most recently updated. The blurred image part on the left is a hyperlink to the csgostats.gg profile page of each of the players.
 
 # Future Improvements
-- ~~Make it Linux friendly.
+- ~~Make it Linux friendly.~~
   - 5/30/23: Added in headless argument and reinstalled chromium and chromedriver with the following commands:
     - sudo apt-get install chromium-browser
     - sudo apt-get install chromium-chromedriver
