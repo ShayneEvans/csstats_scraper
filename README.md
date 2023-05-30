@@ -24,7 +24,9 @@ Selenium WebDriver uses the ChromeDriver to communicate test scripts with Google
 Run the following commands:
 - sudo apt-get install chromium-browser
 - sudo apt-get install chromium-chromedriver
-Once downloading the chromedriver input the directory into the 'driver_path' variable on line 9 of csgostats_scraper.py. The default path should be: /usr/lib/chromium-browser/chromedriver
+
+Once downloading the chromedriver input the directory into the 'driver_path' variable on line 9 of csgostats_scraper.py. The default path should be: 
+/usr/lib/chromium-browser/chromedriver
 
 # Results
 ![csgo_stats](https://github.com/ShayneEvans/csgostats_scraper/assets/70344759/1f8dadc5-088e-4f59-b3b6-ab72c8c8ce6d)
