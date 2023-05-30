@@ -17,11 +17,17 @@ players_dict = {
 ## Google Service Account and Google Sheets Setup
 Next the user will need to create a project and service account with Google. I followed [this article](https://medium.com/@jb.ranchana/write-and-append-dataframes-to-google-sheets-in-python-f62479460cf0) (NOTE: pydrive package not required). After getting the JSON credentials place it in the program root directory. Next create the google sheet and obtain the sheet id from the url. The sheet id can be found after the "gid" in the sheet URL.
 
-## Downloading Chromedriver
-Selenium WebDriver uses the ChromeDriver to communicate test scripts with Google Chrome. This will be requiref if using Chrome, as I did. First check the version of google chrome you are using by going to: chrome://version/ and seeing the number at the top. Then go to the [chromedrtiver download page](https://chromedriver.chromium.org/downloads) and download the driver for the approrpiate Chrome version. Once downloaded input the directory into the 'driver_path' variable on line 6 of csgostats_scraper.py
+### Windows
+Selenium WebDriver uses the ChromeDriver to communicate test scripts with Google Chrome. This will be required if using Chrome, as I did. First check the version of google chrome you are using by going to: chrome://version/ and seeing the number at the top. Then go to the [chromedrtiver download page](https://chromedriver.chromium.org/downloads) and download the driver for the approrpiate Chrome version. Once downloaded input the directory into the 'driver_path' variable on line 9 of csgostats_scraper.py
+
+### Linux
+Run the following commands:
+- sudo apt-get install chromium-browser
+- sudo apt-get install chromium-chromedriver
+Once downloading the chromedriver input the directory into the 'driver_path' variable on line 9 of csgostats_scraper.py. The default path should be: /usr/lib/chromium-browser/chromedriver
 
 # Results
-![csgo-stats](https://github.com/ShayneEvans/csgostats_scraper/assets/70344759/af50f90a-4c17-4f94-b23c-abce51a35d9e)
+![csgo_stats](https://github.com/ShayneEvans/csgostats_scraper/assets/70344759/1f8dadc5-088e-4f59-b3b6-ab72c8c8ce6d)
 
 What the google sheet should look like after the script is finished executing. This is a sorted list (by HLTV rating) of all the players entered into the dictionary. Included in A1 is the timestamp at which the sheet was most recently updated. The blurred image part on the left is a hyperlink to the csgostats.gg profile page of each of the players.
 
