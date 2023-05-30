@@ -26,5 +26,10 @@ Selenium WebDriver uses the ChromeDriver to communicate test scripts with Google
 What the google sheet should look like after the script is finished executing. This is a sorted list (by HLTV rating) of all the players entered into the dictionary. Included in A1 is the timestamp at which the sheet was most recently updated. The blurred image part on the left is a hyperlink to the csgostats.gg profile page of each of the players.
 
 # Future Improvements
-- Make it Linux friendly. I attempted to set this script up in an Ubuntu 22.10 environment on my Raspberry Pi 3 but ran into many issues when trying to use selenium and chromdriver/chromium. 
+- ~~Make it Linux friendly.
+  - 5/30/23: Added in headless argument and reinstalled chromium and chromedriver with the following commands:
+    - sudo apt-get install chromium-browser
+    - sudo apt-get install chromium-chromedriver
+  - Default path for chromedriver is: /usr/lib/chromium-browser/chromedriver
+  - Program runs a tad bit slower on my Ubuntu Server on Raspberry Pi 3, around 4-5 minutes but now it can be autoamted more easily!
 - Optimize the program. I looked into trying to make the use of selenium faster. At the time of upload it takes anywhere from 5-10 seconds per profile to scrape the information, not sure if this is normal or not. Took around 2 minutes for script to run, which is still a lot more fast than doing it manually at the very least.
