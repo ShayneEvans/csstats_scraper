@@ -1,10 +1,13 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import re
+op = webdriver.ChromeOptions()
+op.add_argument("--headless=new")
 
+#Uses selenium to obtain stats from csgostats.gg
 def scrape_profile(player_profile):
     driver_path = '/path/to/chromedriver/'
-    driver = webdriver.Chrome(executable_path=driver_path)
+    driver = webdriver.Chrome(executable_path=driver_path, options = op)
     url = player_profile
     driver.get(url)
     #Getting the player stats meta tag
@@ -17,6 +20,7 @@ def scrape_profile(player_profile):
     driver.quit()
     return meta_content, total_games
 
+#Using regular expressions to exract each individual stat into a variable which is returned in tuple format
 def get_stats(meta_content, total_games, find_win_percentage_regex, find_kill_death_ratio_regex, find_hltv_rating_regex, find_headshot_percentage_regex, find_adr_regex):
     if meta_content is not None:
         find_win_percentage = re.search(find_win_percentage_regex, str(meta_content))
