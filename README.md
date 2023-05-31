@@ -18,14 +18,14 @@ players_dict = {
 Next the user will need to create a project and service account with Google. I followed [this article](https://medium.com/@jb.ranchana/write-and-append-dataframes-to-google-sheets-in-python-f62479460cf0) (NOTE: pydrive package not required). After getting the JSON credentials place it in the program root directory. Next create the google sheet and obtain the sheet id from the url. The sheet id can be found after the "gid" in the sheet URL.
 
 ### Windows
-Selenium WebDriver uses the ChromeDriver to communicate test scripts with Google Chrome. This will be required if using Chrome, as I did. First check the version of google chrome you are using by going to: chrome://version/ and seeing the number at the top. Then go to the [chromedrtiver download page](https://chromedriver.chromium.org/downloads) and download the driver for the approrpiate Chrome version. Once downloaded input the directory into the 'driver_path' variable on line 9 of csgostats_scraper.py
+Selenium WebDriver uses the ChromeDriver to communicate test scripts with Google Chrome. This will be required if using Chrome, as I did. First check the version of google chrome you are using by going to: chrome://version/ and seeing the number at the top. Then go to the [chromedrtiver download page](https://chromedriver.chromium.org/downloads) and download the driver for the approrpiate Chrome version. Once downloaded input the directory into the 'chromedriver_path' variable on line 10 of csgostats_scraper.py
 
 ### Linux
 Run the following commands:
 - sudo apt-get install chromium-browser
 - sudo apt-get install chromium-chromedriver
 
-Once downloading the chromedriver input the directory into the 'driver_path' variable on line 9 of csgostats_scraper.py. The default path should be: 
+Once downloading the chromedriver input the directory into the 'chromedriver_path' variable on line 10 of csgostats_scraper.py. The default path should be: 
 /usr/lib/chromium-browser/chromedriver
 
 # Results
@@ -38,6 +38,6 @@ What the google sheet should look like after the script is finished executing. T
   - 5/30/23: Added in headless argument and reinstalled chromium and chromedriver with the following commands:
     - sudo apt-get install chromium-browser
     - sudo apt-get install chromium-chromedriver
-  - Default path for chromedriver is: /usr/lib/chromium-browser/chromedriver
+  - Default path (Linux) for chromedriver is: /usr/lib/chromium-browser/chromedriver, but I found /usr/bin/chromedriver to work better (found with where chromedriver command)
   - Program runs a tad bit slower on my Ubuntu Server on Raspberry Pi 3, around 4-5 minutes but now it can be autoamted more easily!
 - Optimize the program. I looked into trying to make the use of selenium faster. At the time of upload it takes anywhere from 5-10 seconds per profile to scrape the information, not sure if this is normal or not. Took around 2 minutes for script to run, which is still a lot more fast than doing it manually at the very least.
