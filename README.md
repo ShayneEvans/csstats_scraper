@@ -1,5 +1,5 @@
-# csgostats_scraper
-Utilizes selenium to scrape a few statistics from csgostats.gg
+# csgostats_scraper - Compare Your Stats With Friends in Minutes!
+Utilizes selenium to scrape a stats from csgostats.gg with customizable start and end date parameters and display them to a google sheet.
 
 # Project Goal
 I created this script to compile a list of friends csgo stats utilizing Selenium on csgostats.gg and exported the data to a google sheet which can be viewed by all of us to talk trash and compare not so meaningful stats.
