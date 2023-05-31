@@ -1,13 +1,14 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
 import re
 op = webdriver.ChromeOptions()
 op.add_argument("--headless=new")
 
 #Uses selenium to obtain stats from csgostats.gg
 def scrape_profile(player_profile):
-    driver_path = '/path/to/chromedriver/'
-    driver = webdriver.Chrome(executable_path=driver_path, options = op)
+    chromedriver_path = '/usr/bin/chromedriver'
+    driver = webdriver.Chrome(service=Service(chromedriver_path), options = op)
     url = player_profile
     driver.get(url)
     #Getting the player stats meta tag
