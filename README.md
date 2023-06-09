@@ -48,11 +48,11 @@ What the google sheet should look like after the script is finished executing. T
 I automate the program by using a crontab on Ubuntu. The following works for me:
 0 * * * * . $HOME/.profile; cd /path/to/program/directory && xvfb-run --auto-servernum path/to/python3 /path/to/main.py
 
-0 * * * * 
-This means that the script will be executed at minute 0 of every hour of the day. To get exactly what you want I would reccomend using [crontab guru](https://crontab.guru/).
+0 * * * *   
+This means that the script will be executed at minute 0 of every hour of the day. To get exactly what you want I would reccomend using [crontab guru](https://crontab.guru/).  
 
-. $HOME/.profile; 
-This is used to execute the contents of .profile, this is important if using enviornment variables, ignore if not.
+. $HOME/.profile;  
+This is used to execute the contents of .profile, this is important if using enviornment variables, ignore if not.  
 
-cd /path/to/program/directory && xvfb-run --autoservernum path/to/python3 /path/to/main.py 
-This first changes the directory to the program folder and then runs xvfb-run to set up ap virtual server to work as a 'screen' for selenium. This is important if using the script in a headless enviornment such as a terminal. The script would not run through crontab without this because Selenium needed a graphical interface even though it was being run in headless mode. With xvfb-run --autoservernum this problem was resolved. Lastly the absolute path of python and main.py are used to execute the script.  
+cd /path/to/program/directory && xvfb-run --autoservernum path/to/python3 /path/to/main.py  
+This first changes the directory to the program folder and then runs xvfb-run to set up ap virtual server to work as a 'screen' for selenium. This is important if using the script in a headless enviornment such as a terminal. The script would not run through crontab without this because Selenium needed a graphical interface even though it was being run in headless mode. With xvfb-run --autoservernum this problem was resolved. Lastly the absolute path of python and main.py are used to execute the script.
