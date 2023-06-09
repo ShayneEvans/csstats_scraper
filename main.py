@@ -76,9 +76,10 @@ if __name__ == '__main__':
 
     #Getting all of the updated player info
     for player in players_dict:
-        profile_meta_data, total_games = csgostats_scraper.scrape_profile(players_dict[player])
+        profile_meta_data, total_games, rank_image_cell_text = csgostats_scraper.scrape_profile(players_dict[player])
         player_info = csgostats_scraper.get_stats(profile_meta_data,
                                                   total_games,
+                                                  rank_image_cell_text,
                                                   find_win_percentage_regex,
                                                   find_kill_death_ratio_regex,
                                                   find_hltv_rating_regex,
@@ -86,5 +87,5 @@ if __name__ == '__main__':
                                                   find_adr_regex)
         all_player_info.append(player_info)
 
-    players_df = pd.DataFrame(all_player_info, index = hyperlinks ,columns=['HLTV Rating', 'KDR', 'ADR', 'Win %', 'Headshot %', 'Total Games Played'])
+    players_df = pd.DataFrame(all_player_info, index = hyperlinks ,columns=['HLTV Rating', 'KDR', 'ADR', 'Win %', 'Headshot %', 'Total Games Played', 'Rank'])
     upload_to_google_sheets(players_df.sort_values('HLTV Rating', ascending=False))
