@@ -8,7 +8,7 @@ I created this script to compile a list of friends csgo stats utilizing Selenium
 
 Firstly the user needs to create their own player dictionary and input the players and their csgostats.gg profile urls on line 11 of main.py. The following format should be used:
 
-'''Python
+'''python
 players_dict = {
   "EliGE": "https://csgostats.gg/player/76561198066693739",
   "nitr0": "https://csgostats.gg/player/76561197995889730",
