@@ -2,7 +2,11 @@
 Utilizes selenium to scrape a stats from csgostats.gg with customizable start and end date parameters and display them to a google sheet.
 
 # Project Goal
-I created this script to compile a list of friends csgo stats utilizing Selenium on csgostats.gg and exported the data to a google sheet which can be viewed by all of us to talk trash and compare not so meaningful stats.
+I created this script to compile a list of friends csgo stats utilizing Selenium on csgostats.gg and exported the data to a google sheet which can be viewed by all of us to talk trash and compare not so meaningful stats.  
+
+![csgostats](https://github.com/ShayneEvans/csgostats_scraper/assets/70344759/e7ae3ea1-cbd2-4cec-94f0-d5d1045270cc)  
+
+What the google sheet should look like after the script is finished executing. This is a sorted list (by HLTV rating) of all the players entered into the dictionary. Included in A1 is the timestamp at which the sheet was most recently updated. The blurred image part on the left is a hyperlink to the csgostats.gg profile page of each of the players.
 
 # Installation/Setup
 
@@ -29,11 +33,6 @@ Run the following commands:
 
 Once downloading the chromedriver input the directory into the 'chromedriver_path' variable on line 10 of csgostats_scraper.py. The default path should be: 
 /usr/lib/chromium-browser/chromedriver
-
-# Results
-![csgostats](https://github.com/ShayneEvans/csgostats_scraper/assets/70344759/e7ae3ea1-cbd2-4cec-94f0-d5d1045270cc)
-
-What the google sheet should look like after the script is finished executing. This is a sorted list (by HLTV rating) of all the players entered into the dictionary. Included in A1 is the timestamp at which the sheet was most recently updated. The blurred image part on the left is a hyperlink to the csgostats.gg profile page of each of the players.
 
 # Future Improvements
 - ~~Make it Linux friendly.~~
