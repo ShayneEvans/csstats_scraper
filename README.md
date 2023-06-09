@@ -8,13 +8,13 @@ I created this script to compile a list of friends csgo stats utilizing Selenium
 
 Firstly the user needs to create their own player dictionary and input the players and their csgostats.gg profile urls on line 11 of main.py. The following format should be used:
 
-'''python
+```python
 players_dict = {
   "EliGE": "https://csgostats.gg/player/76561198066693739",
   "nitr0": "https://csgostats.gg/player/76561197995889730",
   #....
 }
-'''
+```
 
 ## Google Service Account and Google Sheets Setup
 Next the user will need to create a project and service account with Google. I followed [this article](https://medium.com/@jb.ranchana/write-and-append-dataframes-to-google-sheets-in-python-f62479460cf0) (NOTE: pydrive package not required). After getting the JSON credentials place it in the program root directory. Next create the google sheet and obtain the sheet id from the url. The sheet id can be found after the "gid" in the sheet URL.
