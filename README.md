@@ -41,7 +41,12 @@ Once downloading the chromedriver input the directory into the 'chromedriver_pat
     - sudo apt-get install chromium-chromedriver
   - Default path (Linux) for chromedriver is: /usr/lib/chromium-browser/chromedriver, but I found /usr/bin/chromedriver to work better (found with where chromedriver command)
   - Program runs a tad bit slower on my Ubuntu Server on Raspberry Pi 3, around 4-5 minutes but now it can be autoamted more easily!
-- Optimize the program. I looked into trying to make the use of selenium faster. At the time of upload it takes anywhere from 5-10 seconds per profile to scrape the information, not sure if this is normal or not. Took around 2 minutes for script to run, which is still a lot more fast than doing it manually at the very least.
+- ~~Optimize the program.~~
+  - 6/21/23: Added options for multiprocessing and multithreading from within the script. Toggeable by changing the "option_selected" variable. Options are:
+    - Sequential (seq)
+    - Multithreading (mt)
+    - Multiprocessing (mp)
+  - Tested on my Windows machine and is with utilization of 15 threads the program executes ~30 seconds with 25 users. Lacked hardware for testing parallel programming approaches on Linux so testing still need to be done there.
 
 # Automation (LINUX)
 I automate the program by using a crontab on Ubuntu. The following works for me:
