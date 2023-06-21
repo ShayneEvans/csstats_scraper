@@ -1,11 +1,10 @@
 import math
-import multiprocessing
 import re
-import threading
-from multiprocessing import Queue, cpu_count
 import time
 from datetime import datetime
 from datetime import timedelta
+import threading
+from multiprocessing
 import gspread
 import pandas as pd
 from google.oauth2.service_account import Credentials
@@ -91,9 +90,9 @@ def get_all_player_info_parallel(players_dictionary, option, find_win_percentage
     all_player_info = []
 
     tasks = []
-    queue = Queue()
+    queue = multiprocessing.Queue()
     # Getting number of cpu cores - 1
-    num_threads = cpu_count() - 1
+    num_threads = multiprocessing.cpu_count() - 1
     # Chunks obtained by dividing number of player profiles by the number of cores
     chunks = get_num_chunks(num_threads)
     chunk_start = 0
