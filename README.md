@@ -42,7 +42,7 @@ Once downloading the chromedriver input the directory into the 'chromedriver_pat
   - Default path (Linux) for chromedriver is: /usr/lib/chromium-browser/chromedriver, but I found /usr/bin/chromedriver to work better (found with where chromedriver command)
   - Program runs a tad bit slower on my Ubuntu Server on Raspberry Pi 3, around 4-5 minutes but now it can be autoamted more easily!
 - ~~Optimize the program.~~
-  - 6/21/23: Added options for multiprocessing and multithreading from within the script. Toggeable by changing the "option_selected" variable. Options are:
+  - 6/21/23: Added options for multiprocessing and multithreading from within the script. Toggeable by changing the "option_selected" variable in main.py. Options are:
     - Sequential (seq)
     - Multithreading (mt)
     - Multiprocessing (mp)
