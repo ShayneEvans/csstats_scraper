@@ -3,43 +3,51 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 import re
 from selenium.common.exceptions import NoSuchElementException, JavascriptException
+
 op = webdriver.ChromeOptions()
 op.add_argument("--headless=new")
 
-#Uses selenium to obtain stats from csgostats.gg
-def scrape_profile(player_profile, hyperlink, queue = None):
+
+# Uses selenium to obtain stats from csgostats.gg
+def scrape_profile(player_profile, hyperlink, queue=None):
     driver_path = 'chromedriver.exe'
-    driver = webdriver.Chrome(options = op, executable_path=driver_path)
+    driver = webdriver.Chrome(options=op, executable_path=driver_path)
     url = player_profile
     driver.get(url)
 
     try:
-        meta_tag = driver.find_element(By.XPATH,"//meta[@property='og:description']")
+        meta_tag = driver.find_element(By.XPATH, "//meta[@property='og:description']")
         meta_content = meta_tag.get_attribute("content")
-    
+
         # Find the <div> elements with class="total-stat"
         total_stat_elements = driver.find_elements(By.CLASS_NAME, "total-stat")
         total_games = total_stat_elements[0].find_element(By.CLASS_NAME, "total-value").text
-    
-        #Find the <div> elements with class="player-ranks"
+
+        # Find the <div> elements with class="player-ranks"
         try:
-            rank_img_url = driver.execute_script("return document.querySelector('div.player-ranks img').getAttribute('src')")
-            #Format used to insert image to cell and resize to fit the cell
+            rank_img_url = driver.execute_script(
+                "return document.querySelector('div.player-ranks img').getAttribute('src')")
+            # Format used to insert image to cell and resize to fit the cell
             rank_img_cell_txt = f"=IMAGE(\"{rank_img_url}\", 2)"
         except JavascriptException:
-            rank_img_cell-txt = 'N/A'
-    
+            rank_img_cell_txt = 'N/A'
+
         driver.quit()
-    
-        #If not using multiprocessing
+
+        # If not using multiprocessing
         if queue is None:
             return (hyperlink, meta_content, total_games, rank_img_cell_txt)
         else:
             queue.put((hyperlink, meta_content, total_games, rank_img_cell_txt))
     except NoSuchElementException:
-            return (hyperlink, Noone, None, None)
+        if queue is None:
+            return (hyperlink, None, None, None)
+        else:
+            queue.put((hyperlink, None, None, None))
 
-def get_stats(user_profile_hyper_link, meta_content, total_games, rank_image_url, find_win_percentage_regex, find_kill_death_ratio_regex, find_hltv_rating_regex, find_headshot_percentage_regex, find_adr_regex):
+
+def get_stats(user_profile_hyper_link, meta_content, total_games, rank_image_url, find_win_percentage_regex,
+              find_kill_death_ratio_regex, find_hltv_rating_regex, find_headshot_percentage_regex, find_adr_regex):
     if meta_content is not None:
         find_win_percentage = re.search(find_win_percentage_regex, str(meta_content))
         find_kill_death_ratio = re.search(find_kill_death_ratio_regex, str(meta_content))
@@ -52,6 +60,8 @@ def get_stats(user_profile_hyper_link, meta_content, total_games, rank_image_url
         headshot_percentage = find_headshot_percentage.group(1)
         adr = find_adr.group(1)
 
-        return (user_profile_hyper_link, hltv_rating, kill_death_ratio, adr, win_percentage, headshot_percentage, total_games, rank_image_url)
+        return (
+        user_profile_hyper_link, hltv_rating, kill_death_ratio, adr, win_percentage, headshot_percentage, total_games,
+        rank_image_url)
     else:
-        return (user_profile_hyper_link, '0', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'NOG') 
+        return (user_profile_hyper_link, '0', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'NOG')
