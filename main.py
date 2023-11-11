@@ -5,38 +5,18 @@ from datetime import datetime
 from datetime import timedelta
 import threading
 import multiprocessing
-#from multiprocessing import Process, Queue, cpu_count, set_start_method
 import gspread
 import pandas as pd
 from google.oauth2.service_account import Credentials
 from gspread_dataframe import set_with_dataframe
 import csgostats_scraper
-import time
 import os
 
 #USER SPECIFIC
 players_dict = {
-    "OGMick": "https://csstats.gg/player/76561199035443213",
-    "Shayne": "https://csstats.gg/player/76561198201295539",
-    "dash": "https://csstats.gg/player/76561198050719997",
-    "chub": "https://csstats.gg/player/76561198119639123",
-    "Sageisme": "https://csstats.gg/player/76561198057871081",
-    "erik": "https://csstats.gg/player/76561198127559100",
-    "buttshit": "https://csstats.gg/player/76561198010042553",
-    "NotAGiraffe": "https://csstats.gg/player/76561198100651592",
-    "Zilla": "https://csstats.gg/player/76561198027843752",
-    "cowbiN": "https://csstats.gg/player/76561198116033728",
-    "sloth": "https://csstats.gg/player/76561198979335722",
-    "Durandal": "https://csstats.gg/player/76561198065330129",
-    "pinchedcow": "https://csstats.gg/player/76561198058012314",
-    "zuggie24": "https://csstats.gg/player/76561198106154788",
-    "Hulked Hogan": "https://csstats.gg/player/76561198021826918",
-    "Bufo": "https://csstats.gg/player/76561198088834237",
-    "hergs": "https://csstats.gg/player/76561198003016433",
-    "rage": "https://csstats.gg/player/76561198208213491",
-    "Epi": "https://csstats.gg/player/76561198067048278",
-    "sophie": "https://csstats.gg/player/76561198383181596",
-    "Asper29": "https://csstats.gg/player/76561198044402208"
+    "EliGE": "https://csgostats.gg/player/76561198066693739",
+    "nitr0": "https://csgostats.gg/player/76561197995889730",
+    #....
 }
 
 #Uploads dataframe to google sheets
@@ -188,7 +168,6 @@ if __name__ == '__main__':
     find_headshot_percentage_regex = re.compile(r'HS:(.*?) ADR:')
     find_adr_regex = re.compile(r'ADR:(.*?)\\')
 
-    start_time = time.time()
     # If user selected option 0, use sequential method
     if selected_option == 'seq':
         all_player_info = get_all_player_info_sequential(players_dict,
@@ -213,6 +192,3 @@ if __name__ == '__main__':
     all_player_info_list = [player_info[1:] for player_info in all_player_info]
     players_df = pd.DataFrame(all_player_info_list, index=index, columns=['HLTV Rating', 'KDR', 'ADR', 'Win %', 'Headshot %', 'Total Games Played', 'Rank'])
     upload_to_google_sheets(players_df.sort_values('HLTV Rating', ascending=False))
-    end_time = time.time()
-    execution_time = end_time - start_time
-    print(f'{execution_time} seconds')
