@@ -4,18 +4,39 @@ import time
 from datetime import datetime
 from datetime import timedelta
 import threading
-from multiprocessing
+import multiprocessing
+#from multiprocessing import Process, Queue, cpu_count, set_start_method
 import gspread
 import pandas as pd
 from google.oauth2.service_account import Credentials
 from gspread_dataframe import set_with_dataframe
 import csgostats_scraper
+import time
+import os
 
 #USER SPECIFIC
 players_dict = {
-    "EliGE": "https://csgostats.gg/player/76561198066693739",
-    "nitr0": "https://csgostats.gg/player/76561197995889730",
-    #.....
+    "OGMick": "https://csstats.gg/player/76561199035443213",
+    "Shayne": "https://csstats.gg/player/76561198201295539",
+    "dash": "https://csstats.gg/player/76561198050719997",
+    "chub": "https://csstats.gg/player/76561198119639123",
+    "Sageisme": "https://csstats.gg/player/76561198057871081",
+    "erik": "https://csstats.gg/player/76561198127559100",
+    "buttshit": "https://csstats.gg/player/76561198010042553",
+    "NotAGiraffe": "https://csstats.gg/player/76561198100651592",
+    "Zilla": "https://csstats.gg/player/76561198027843752",
+    "cowbiN": "https://csstats.gg/player/76561198116033728",
+    "sloth": "https://csstats.gg/player/76561198979335722",
+    "Durandal": "https://csstats.gg/player/76561198065330129",
+    "pinchedcow": "https://csstats.gg/player/76561198058012314",
+    "zuggie24": "https://csstats.gg/player/76561198106154788",
+    "Hulked Hogan": "https://csstats.gg/player/76561198021826918",
+    "Bufo": "https://csstats.gg/player/76561198088834237",
+    "hergs": "https://csstats.gg/player/76561198003016433",
+    "rage": "https://csstats.gg/player/76561198208213491",
+    "Epi": "https://csstats.gg/player/76561198067048278",
+    "sophie": "https://csstats.gg/player/76561198383181596",
+    "Asper29": "https://csstats.gg/player/76561198044402208"
 }
 
 #Uploads dataframe to google sheets
@@ -25,29 +46,28 @@ def upload_to_google_sheets(players_df):
               'https://www.googleapis.com/auth/drive']
 
     ###USER SPECIFIC###
-    credentials = Credentials.from_service_account_file('/path/to/json/credentials/', scopes=scopes)
+    credentials = Credentials.from_service_account_file(str(os.environ.get('PATH_TO_CREDENTIALS')), scopes=scopes)
 
     gc = gspread.authorize(credentials)
 
     # open a google sheet
-    gs = gc.open_by_key('google_sheets_id')
+    gs = gc.open_by_key(str(os.environ.get('google_sheet_id')))
     # select a work sheet from its name
-    worksheet1 = gs.worksheet('worksheet_name')
+    worksheet1 = gs.worksheet(str(os.environ.get('google_sheet_worksheet_name')))
     set_with_dataframe(worksheet=worksheet1, dataframe=players_df, include_index=True, include_column_header = True, resize = True)
     worksheet1.update('A1', str(current_time))
 
 # Used to get unix timestamp X months ago. Unix timestmap start and end time are used for a range of data on csgostats.gg
-def get_unix_timestamp_x_months_ago(months):
-    current_date = datetime.now()
-    three_months_ago = current_date - timedelta(months * 30)
-    timestamp = int(time.mktime(three_months_ago.timetuple()))
+def get_date_range(months):
+    today = datetime.today().strftime('%Y-%m-%d')
+    start_date = (datetime.today() - timedelta(days = months * 30)).strftime('%Y-%m-%d')
 
-    return timestamp
+    return f'?date=range&start={start_date}&end={today}'
 
 # Used to add start and end time to URLs
-def add_date_range_to_url(players_dict, date_start, date_end):
+def add_date_range_to_url(players_dict, date_range):
     for player in players_dict:
-        players_dict[player] = f'{players_dict[player]}?type=comp&date_start={date_start}&date_end={date_end}'
+        players_dict[player] = f'{players_dict[player]}{date_range}'
 
     return players_dict
 
@@ -150,9 +170,8 @@ if __name__ == '__main__':
 
     # User has entered a specified range, therefore URLs will be modified to include this range
     if months_ago is not None:
-        end_time = int(time.time())
-        start_time = get_unix_timestamp_x_months_ago(months_ago)
-        players_dictionary = add_date_range_to_url(players_dict, start_time, end_time)
+        date_range = get_date_range(months_ago)
+        players_dictionary = add_date_range_to_url(players_dict, date_range)
 
     # Variable used to enable multiprocessing
     # option[0] = Sequential. This is DEFAULT since it should work on all machines, will likely be slowest
@@ -160,7 +179,7 @@ if __name__ == '__main__':
     # option[2] = Multiprocessing. This should work better on Windows machines
     # NOTE: Multithreading and Multiprogramming could run into issues dependent on system and may not be the best choice depending on number of cores/threads.
     option = ['seq', 'mt', 'mp']
-    selected_option = option[2]
+    selected_option = option[0]
 
     # Pre compiling regular expressions
     find_win_percentage_regex = re.compile(r"Win:(.*?) KPD:")
@@ -169,6 +188,7 @@ if __name__ == '__main__':
     find_headshot_percentage_regex = re.compile(r'HS:(.*?) ADR:')
     find_adr_regex = re.compile(r'ADR:(.*?)\\')
 
+    start_time = time.time()
     # If user selected option 0, use sequential method
     if selected_option == 'seq':
         all_player_info = get_all_player_info_sequential(players_dict,
@@ -193,3 +213,6 @@ if __name__ == '__main__':
     all_player_info_list = [player_info[1:] for player_info in all_player_info]
     players_df = pd.DataFrame(all_player_info_list, index=index, columns=['HLTV Rating', 'KDR', 'ADR', 'Win %', 'Headshot %', 'Total Games Played', 'Rank'])
     upload_to_google_sheets(players_df.sort_values('HLTV Rating', ascending=False))
+    end_time = time.time()
+    execution_time = end_time - start_time
+    print(f'{execution_time} seconds')
