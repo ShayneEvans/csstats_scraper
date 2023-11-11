@@ -4,12 +4,10 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import re
 from selenium.common.exceptions import NoSuchElementException, JavascriptException
-
 op = webdriver.ChromeOptions()
 op.add_argument("--headless=new")
 op.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36")
 op.add_argument("--no-sandbox")
-
 
 # Uses selenium to obtain stats from csgostats.gg
 def scrape_profile(player_profile, hyperlink, queue=None):
@@ -17,14 +15,9 @@ def scrape_profile(player_profile, hyperlink, queue=None):
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=op)
     try:
         driver.get(url)
-        driver.implicitly_wait(10)
-        driver.add_cookie({'name': 'my_cookie', 'value': 'my_cookie_value'})
-        driver.refresh()
-        print(driver.page_source)
         try:
             meta_tag = driver.find_element(By.XPATH, "//meta[@property='og:description']")
             meta_content = meta_tag.get_attribute("content")
-            print(meta_content)
             # Find the <div> elements with class="total-stat"
             total_stat_elements = driver.find_elements(By.CLASS_NAME, "total-stat")
             total_games = total_stat_elements[0].find_element(By.CLASS_NAME, "total-value").text
